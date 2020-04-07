@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: dk.fitfit.fitlog
+---
+testFramework: kotlintest
+sourceLanguage: kotlin
