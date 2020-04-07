@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: fitlog
+    name: fitlog-api
   security:
     enabled: true
     endpoints:
