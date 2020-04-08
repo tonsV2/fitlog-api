@@ -17,10 +17,10 @@ import java.security.Principal
 @Controller
 class ExerciseController(private val userService: UserService, private val exerciseService: ExerciseService) {
     @Post("/exercises")
-    fun save(exerciseRequest: ExerciseRequest, principal: Principal) {
+    fun save(exerciseRequest: ExerciseRequest, principal: Principal): ExerciseResponse {
         val user = userService.getByEmail(principal.name)
         val exercise = exerciseRequest.toExercise(user)
-        exerciseService.save(exercise)
+        return exerciseService.save(exercise).toExerciseResponse()
     }
 
     @Get("/exercises/{id}")
