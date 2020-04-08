@@ -11,10 +11,10 @@ class Exercise(
         val description: String,
         @OneToMany(fetch = FetchType.EAGER)
         @Fetch(FetchMode.SUBSELECT)
-        val videos: List<Video> = mutableListOf(),
+        val videos: MutableList<Video> = mutableListOf(),
         @OneToMany(fetch = FetchType.EAGER)
         @Fetch(FetchMode.SUBSELECT)
-        val pictures: List<Picture> = mutableListOf(),
+        val pictures: MutableList<Picture> = mutableListOf(),
         @JsonIgnore
         @ManyToOne
         val creator: User,
