@@ -7,8 +7,10 @@ import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.PictureService
 import dk.fitfit.fitlog.service.VideoService
 import javax.inject.Singleton
+import javax.transaction.Transactional
 
 @Singleton
+@Transactional
 class ExerciseServiceDefault(override val repository: ExerciseRepository, private val videoService: VideoService, private val pictureService: PictureService) : ExerciseService {
     override fun getPicture(id: Long): Picture = pictureService.get(id)
 
