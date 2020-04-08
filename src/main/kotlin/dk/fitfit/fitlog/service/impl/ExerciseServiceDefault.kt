@@ -40,7 +40,7 @@ class ExerciseServiceDefault(override val repository: ExerciseRepository, privat
 
     override fun deleteVideo(exerciseId: Long, videoId: Long) {
         val exercise = get(exerciseId)
-        val video = getPicture(videoId)
+        val video = getVideo(videoId)
         exercise.videos.remove(video)
         save(exercise)
 //        videoService.delete(videoId)
