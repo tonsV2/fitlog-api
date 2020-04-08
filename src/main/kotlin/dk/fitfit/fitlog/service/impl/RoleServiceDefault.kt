@@ -6,7 +6,7 @@ import dk.fitfit.fitlog.service.RoleService
 import javax.inject.Singleton
 
 @Singleton
-class RoleServiceImpl(private val roleRepository: RoleRepository) : RoleService {
+class RoleServiceDefault(private val roleRepository: RoleRepository) : RoleService {
     override fun save(role: Role): Role = roleRepository.save(role)
 
     override fun findAll(): Iterable<Role> = roleRepository.findAll()
