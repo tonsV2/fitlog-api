@@ -1,17 +1,31 @@
 package dk.fitfit.fitlog.service.impl
 
+import dk.fitfit.fitlog.domain.Exercise
 import dk.fitfit.fitlog.domain.Picture
 import dk.fitfit.fitlog.domain.Video
 import dk.fitfit.fitlog.repository.ExerciseRepository
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.PictureService
 import dk.fitfit.fitlog.service.VideoService
+import dk.fitfit.fitlog.util.merge
 import javax.inject.Singleton
+import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Singleton
 @Transactional
-class ExerciseServiceDefault(override val repository: ExerciseRepository, private val videoService: VideoService, private val pictureService: PictureService) : ExerciseService {
+class ExerciseServiceDefault(override val repository: ExerciseRepository,
+                             private val videoService: VideoService,
+                             private val pictureService: PictureService,
+                             private val entityManager: EntityManager) : ExerciseService {
+
+    override fun update(id: Long, exercise: Exercise): Exercise {
+        val existing = get(id)
+        val updated = existing.merge(exercise)
+        return entityManager.merge(updated)
+//        return save(updated)
+    }
+
     override fun getPicture(id: Long): Picture = pictureService.get(id)
 
     override fun save(exerciseId: Long, picture: Picture): Picture {

@@ -5,10 +5,7 @@ import dk.fitfit.fitlog.domain.dto.*
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
@@ -76,10 +73,29 @@ class ExerciseController(private val userService: UserService, private val exerc
         }
     }
 
-    private fun Video.toVideoResponse() = VideoResponse(url, id)
-    private fun VideoRequest.toVideo(user: User) = Video(url, user)
-    private fun Picture.toPictureResponse() = PictureResponse(url, id)
-    private fun PictureRequest.toPicture(user: User) = Picture(url, user)
-    private fun Exercise.toExerciseResponse() = ExerciseResponse(name, description, videos.map { it.toVideoResponse() }, pictures.map { it.toPictureResponse() }, id)
-    private fun ExerciseRequest.toExercise(user: User) = Exercise(name, description, creator = user)
+    @Put("/exercises/{id}")
+    fun update(id: Long, exerciseRequest: ExerciseRequest, principal: Principal): ExerciseResponse {
+        val user = userService.getByEmail(principal.name)
+        val exercise = exerciseRequest.toExercise(user, id)
+        return exerciseService.update(id, exercise).toExerciseResponse()
+    }
+
+    private fun User.toUserResponse() = UserResponse(created, id)
+    private fun UserRequest.toUser() = User(email, id = id ?: 0)
+    private fun Video.toVideoResponse() = VideoResponse(url, creator.toUserResponse(), id)
+    private fun VideoRequest.toVideo(user: User) = Video(url, user, id ?: 0)
+    private fun Picture.toPictureResponse() = PictureResponse(url, creator.toUserResponse(), id)
+    private fun PictureRequest.toPicture(user: User) = Picture(url, user, id ?: 0)
+    private fun Exercise.toExerciseResponse() = ExerciseResponse(name, description, creator.toUserResponse(), videos.map { it.toVideoResponse() }, pictures.map { it.toPictureResponse() }, id)
+    private fun ExerciseRequest.toExercise(user: User, id: Long = 0): Exercise {
+        val videos = videos?.map {
+            val videoCreator = it.creator?.toUser() ?: throw RuntimeException("Video creator missing")
+            it.toVideo(videoCreator)
+        }
+        val pictures = pictures?.map {
+            val pictureCreator = it.creator?.toUser() ?: throw RuntimeException("Picture creator missing")
+            it.toPicture(pictureCreator)
+        }
+        return Exercise(name, description, user, videos?.toMutableList() ?: mutableListOf(), pictures?.toMutableList() ?: mutableListOf(), this.id ?: id)
+    }
 }

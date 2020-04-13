@@ -5,6 +5,7 @@ import dk.fitfit.fitlog.domain.Picture
 import dk.fitfit.fitlog.domain.Video
 
 interface ExerciseService : CrudService<Exercise, Long> {
+    fun update(id: Long, exercise: Exercise): Exercise
     fun getPicture(id: Long): Picture
     fun save(exerciseId: Long, picture: Picture): Picture
     fun deletePicture(exerciseId: Long, pictureId: Long)
