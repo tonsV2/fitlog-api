@@ -14,7 +14,7 @@ import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
+import java.time.ZoneOffset
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller
@@ -31,8 +31,9 @@ class ExerciseController(private val userService: UserService, private val exerc
 
     @Get("/exercises")
     fun findAll(updatedTimestamp: Long?) = if (updatedTimestamp != null) {
-        val epochSecond = Instant.ofEpochSecond(updatedTimestamp)
-        val updated = LocalDateTime.ofInstant(epochSecond, ZoneId.systemDefault())
+        // TODO: Why do I have to add one millisecond to make this work?
+        val epochMilli = Instant.ofEpochMilli(updatedTimestamp + 1)
+        val updated = LocalDateTime.ofInstant(epochMilli, ZoneOffset.UTC)
         exerciseService.findAllAfter(updated)
     } else {
         exerciseService.findAll()
