@@ -1,17 +1,20 @@
 package dk.fitfit.fitlog.controller
 
-import dk.fitfit.fitlog.domain.*
+import dk.fitfit.fitlog.domain.Exercise
+import dk.fitfit.fitlog.domain.Picture
+import dk.fitfit.fitlog.domain.User
+import dk.fitfit.fitlog.domain.Video
 import dk.fitfit.fitlog.domain.dto.*
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller
@@ -27,7 +30,13 @@ class ExerciseController(private val userService: UserService, private val exerc
     fun get(id: Long) = exerciseService.get(id).toExerciseResponse()
 
     @Get("/exercises")
-    fun findAll(): Iterable<ExerciseResponse> = exerciseService.findAll().map { it.toExerciseResponse() }
+    fun findAll(updatedTimestamp: Long?) = if (updatedTimestamp != null) {
+        val epochSecond = Instant.ofEpochSecond(updatedTimestamp)
+        val updated = LocalDateTime.ofInstant(epochSecond, ZoneId.systemDefault())
+        exerciseService.findAllAfter(updated)
+    } else {
+        exerciseService.findAll()
+    }.map { it.toExerciseResponse() }
 
     @Delete("/exercises/{id}")
     fun delete(id: Long, principal: Principal): HttpResponse<Any> = userService.getByEmail(principal.name).let {
@@ -40,46 +49,62 @@ class ExerciseController(private val userService: UserService, private val exerc
         }
     }
 
-    @Post("/exercises/{exerciseId}/videos")
-    fun saveVideo(exerciseId: Long, videoRequest: VideoRequest, principal: Principal): VideoResponse {
+    @Post("/exercises/{exerciseId}/videos/{videoId}")
+    fun addVideo(exerciseId: Long, videoId: Long, principal: Principal): HttpResponse<Any> {
         val user = userService.getByEmail(principal.name)
-        val video = videoRequest.toVideo(user)
-        return exerciseService.save(exerciseId, video).toVideoResponse()
-    }
-
-    @Delete("/exercises/{exerciseId}/videos/{videoId}")
-    fun deleteVideo(exerciseId: Long, videoId: Long, principal: Principal): HttpResponse<Any> = userService.getByEmail(principal.name).let {
-        val video = exerciseService.getVideo(videoId)
-        return@let if (video.creator == it) {
-            exerciseService.deleteVideo(exerciseId, videoId)
+        val exercise = exerciseService.get(exerciseId)
+        return if (exercise.creator.id == user.id) {
+            exerciseService.addVideo(exerciseId, videoId)
             HttpResponse.ok()
         } else {
             HttpResponse.notAllowed()
         }
     }
 
-    @Post("/exercises/{exerciseId}/pictures")
-    fun savePicture(exerciseId: Long, pictureRequest: PictureRequest, principal: Principal): PictureResponse {
+    @Delete("/exercises/{exerciseId}/videos/{videoId}")
+    fun removeVideo(exerciseId: Long, videoId: Long, principal: Principal): HttpResponse<Any> = userService.getByEmail(principal.name).let {
+        val exercise = exerciseService.get(exerciseId)
+        return@let if (exercise.creator.id == it.id) {
+            exerciseService.removeVideo(exerciseId, videoId)
+            HttpResponse.ok()
+        } else {
+            HttpResponse.notAllowed()
+        }
+    }
+
+    @Post("/exercises/{exerciseId}/pictures/{pictureId}")
+    fun addPicture(exerciseId: Long, pictureId: Long, principal: Principal): HttpResponse<Any> {
         val user = userService.getByEmail(principal.name)
-        val picture = pictureRequest.toPicture(user)
-        return exerciseService.save(exerciseId, picture).toPictureResponse()
+        val exercise = exerciseService.get(exerciseId)
+        return if (exercise.creator.id == user.id) {
+            exerciseService.addPicture(exerciseId, pictureId)
+            HttpResponse.ok()
+        } else {
+            HttpResponse.notAllowed()
+        }
     }
 
     @Delete("/exercises/{exerciseId}/pictures/{pictureId}")
     fun deletePicture(exerciseId: Long, pictureId: Long, principal: Principal): HttpResponse<Any> = userService.getByEmail(principal.name).let {
-        val picture = exerciseService.getPicture(pictureId)
-        return@let if (picture.creator == it) {
-            exerciseService.deletePicture(exerciseId, pictureId)
+        val exercise = exerciseService.get(exerciseId)
+        return@let if (exercise.creator.id == it.id) {
+            exerciseService.removePicture(exerciseId, pictureId)
             HttpResponse.ok()
         } else {
             HttpResponse.notAllowed()
         }
     }
 
-    private fun Video.toVideoResponse() = VideoResponse(url, id)
-    private fun VideoRequest.toVideo(user: User) = Video(url, user)
-    private fun Picture.toPictureResponse() = PictureResponse(url, id)
-    private fun PictureRequest.toPicture(user: User) = Picture(url, user)
-    private fun Exercise.toExerciseResponse() = ExerciseResponse(name, description, videos.map { it.toVideoResponse() }, pictures.map { it.toPictureResponse() }, id)
-    private fun ExerciseRequest.toExercise(user: User) = Exercise(name, description, creator = user)
+    @Put("/exercises/{id}")
+    fun update(id: Long, exerciseRequest: ExerciseRequest, principal: Principal): ExerciseResponse {
+        val user = userService.getByEmail(principal.name)
+        val exercise = exerciseRequest.toExercise(user, id)
+        return exerciseService.update(id, exercise).toExerciseResponse()
+    }
+
+    private fun User.toUserResponse() = UserResponse(created, id)
+    private fun Video.toVideoResponse() = VideoResponse(url, creator.toUserResponse(), id)
+    private fun Picture.toPictureResponse() = PictureResponse(url, creator.toUserResponse(), id)
+    private fun Exercise.toExerciseResponse() = ExerciseResponse(name, description, creator.toUserResponse(), videos?.map { it.toVideoResponse() }, pictures?.map { it.toPictureResponse() }, id, created, updated)
+    private fun ExerciseRequest.toExercise(user: User, id: Long = 0) = Exercise(name, description, creator = user, id = this.id ?: id)
 }

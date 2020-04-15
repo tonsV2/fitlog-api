@@ -1,14 +1,13 @@
 package dk.fitfit.fitlog.service
 
 import dk.fitfit.fitlog.domain.Exercise
-import dk.fitfit.fitlog.domain.Picture
-import dk.fitfit.fitlog.domain.Video
+import java.time.LocalDateTime
 
 interface ExerciseService : CrudService<Exercise, Long> {
-    fun getPicture(id: Long): Picture
-    fun save(exerciseId: Long, picture: Picture): Picture
-    fun deletePicture(exerciseId: Long, pictureId: Long)
-    fun getVideo(id: Long): Video
-    fun save(exerciseId: Long, video: Video): Video
-    fun deleteVideo(exerciseId: Long, videoId: Long)
+    fun findAllAfter(updatedDateTime: LocalDateTime): Iterable<Exercise>
+    fun update(id: Long, exercise: Exercise): Exercise
+    fun addPicture(exerciseId: Long, pictureId: Long)
+    fun removePicture(exerciseId: Long, pictureId: Long): Boolean
+    fun addVideo(exerciseId: Long, videoId: Long)
+    fun removeVideo(exerciseId: Long, videoId: Long): Boolean
 }
