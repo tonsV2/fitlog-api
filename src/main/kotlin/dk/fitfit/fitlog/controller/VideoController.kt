@@ -1,8 +1,7 @@
 package dk.fitfit.fitlog.controller
 
-import dk.fitfit.fitlog.domain.User
-import dk.fitfit.fitlog.domain.Video
-import dk.fitfit.fitlog.domain.dto.UserResponse
+import dk.fitfit.fitlog.domain.assembler.toVideo
+import dk.fitfit.fitlog.domain.assembler.toVideoResponse
 import dk.fitfit.fitlog.domain.dto.VideoRequest
 import dk.fitfit.fitlog.domain.dto.VideoResponse
 import dk.fitfit.fitlog.service.UserService
@@ -43,15 +42,12 @@ class VideoController(private val userService: UserService, private val videoSer
         }
     }
 
-    /*
-        @Put("/videos/{id}")
-        fun update(id: Long, videoRequest: VideoRequest, principal: Principal): VideoResponse {
-            val user = userService.getByEmail(principal.name)
-            val video = videoRequest.toVideo(user, id)
-            return videoService.update(id, video).toVideoResponse()
-        }
-    */
-    private fun User.toUserResponse() = UserResponse(created, id)
-    private fun Video.toVideoResponse() = VideoResponse(url, creator.toUserResponse(), id)
-    private fun VideoRequest.toVideo(user: User) = Video(url, user, id ?: 0)
+/*
+    @Put("/videos/{id}")
+    fun update(id: Long, videoRequest: VideoRequest, principal: Principal): VideoResponse {
+        val user = userService.getByEmail(principal.name)
+        val video = videoRequest.toVideo(user, id)
+        return videoService.update(id, video).toVideoResponse()
+    }
+*/
 }
