@@ -27,17 +27,3 @@ echo '{
 ```bash
 http :8080/exercises "Authorization:Bearer $access_token"
 ```
-
-## Add picture to exercise
-```bash
-echo '{
-        "url": "https://some.picture.com/shalalal"
-    }' | http :8080/exercises/4/pictures "Authorization:Bearer $access_token"
-```
-
-## Add video to exercise
-```bash
-echo '{
-        "url": "https://some.video.com/shalalal"
-    }' | http :8080/exercises/4/videos "Authorization:Bearer $access_token"
-```
