@@ -57,7 +57,7 @@ class GoogleTokenVerifier(private val authenticationConfiguration: Authenticatio
         val transport = NetHttpTransport()
         val jsonFactory = JacksonFactory()
         val verifier = GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(listOf(authenticationConfiguration.webClientId, authenticationConfiguration.androidClientId))
+                .setAudience(listOf(authenticationConfiguration.androidClientId))
                 .build()
         val token = verifier.verify(secret)
         return token?.payload
