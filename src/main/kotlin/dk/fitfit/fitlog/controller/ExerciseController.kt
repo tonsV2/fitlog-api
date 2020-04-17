@@ -1,10 +1,9 @@
 package dk.fitfit.fitlog.controller
 
-import dk.fitfit.fitlog.domain.Exercise
-import dk.fitfit.fitlog.domain.Picture
-import dk.fitfit.fitlog.domain.User
-import dk.fitfit.fitlog.domain.Video
-import dk.fitfit.fitlog.domain.dto.*
+import dk.fitfit.fitlog.domain.assembler.toExercise
+import dk.fitfit.fitlog.domain.assembler.toExerciseResponse
+import dk.fitfit.fitlog.domain.dto.ExerciseRequest
+import dk.fitfit.fitlog.domain.dto.ExerciseResponse
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.HttpResponse
@@ -102,10 +101,4 @@ class ExerciseController(private val userService: UserService, private val exerc
         val exercise = exerciseRequest.toExercise(user, id)
         return exerciseService.update(id, exercise).toExerciseResponse()
     }
-
-    private fun User.toUserResponse() = UserResponse(created, id)
-    private fun Video.toVideoResponse() = VideoResponse(url, creator.toUserResponse(), id)
-    private fun Picture.toPictureResponse() = PictureResponse(url, creator.toUserResponse(), id)
-    private fun Exercise.toExerciseResponse() = ExerciseResponse(name, description, creator.toUserResponse(), videos?.map { it.toVideoResponse() }, pictures?.map { it.toPictureResponse() }, id, created, updated)
-    private fun ExerciseRequest.toExercise(user: User, id: Long = 0) = Exercise(name, description, creator = user, id = this.id ?: id)
 }

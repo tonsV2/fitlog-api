@@ -1,10 +1,9 @@
 package dk.fitfit.fitlog.controller
 
-import dk.fitfit.fitlog.domain.Picture
-import dk.fitfit.fitlog.domain.User
+import dk.fitfit.fitlog.domain.assembler.toPicture
+import dk.fitfit.fitlog.domain.assembler.toPictureResponse
 import dk.fitfit.fitlog.domain.dto.PictureRequest
 import dk.fitfit.fitlog.domain.dto.PictureResponse
-import dk.fitfit.fitlog.domain.dto.UserResponse
 import dk.fitfit.fitlog.service.PictureService
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.HttpResponse
@@ -50,7 +49,4 @@ class PictureController(private val userService: UserService, private val pictur
         return pictureService.update(id, picture).toPictureResponse()
     }
 */
-    private fun User.toUserResponse() = UserResponse(created, id)
-    private fun Picture.toPictureResponse() = PictureResponse(url, creator.toUserResponse(), id)
-    private fun PictureRequest.toPicture(user: User) = Picture(url, user, id ?: 0)
 }

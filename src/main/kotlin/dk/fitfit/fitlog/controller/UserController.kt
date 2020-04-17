@@ -1,7 +1,8 @@
 package dk.fitfit.fitlog.controller
 
 import dk.fitfit.fitlog.domain.Role
-import dk.fitfit.fitlog.domain.User
+import dk.fitfit.fitlog.domain.assembler.toUserResponse
+import dk.fitfit.fitlog.domain.dto.UserResponse
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -15,7 +16,7 @@ import javax.annotation.security.RolesAllowed
 class UserController(private val userService: UserService) {
     @RolesAllowed(Role.ADMIN)
     @Get("/users")
-    fun getUsers(): Iterable<User> = userService.findAll()
+    fun getUsers(): Iterable<UserResponse> = userService.findAll().map { it.toUserResponse() }
 
     @Get("/principal")
     fun getPrincipal(principal: Principal): Principal = principal
