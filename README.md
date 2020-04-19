@@ -1,8 +1,18 @@
-# TODO
-* Create new google backend project
-
 # Usage
-The below examples are made using Fish Shell
+The below examples are made using Fish Shell. Create a copy of `.env.exmaple` named `.env` and fill in credentials as you please.
+
+## Launch using docker-compose
+The below command will build a docker image using Jib. Instantiate it along with a Postgresql container.
+
+The idea is to mimic the Heroku environment locally for development or host it elsewhere.
+
+```bash
+./gradlew jibDockerBuild && docker-compose up app database
+```
+
+## Deploy to Heroku
+`./gradlew jib && heroku container:release web -a fitlogapi`
+
 
 ## Login - get token
 ```bash
@@ -11,9 +21,6 @@ set access_token (echo '{
         "password": "password"
     }' | http :8080/login | jq -r '.access_token')
 ```
-
-## Deploy to Heroku
-`./gradlew jib && heroku container:release web -a fitlogapi`
 
 ## Post exercise
 ```bash
