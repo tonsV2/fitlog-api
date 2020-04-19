@@ -27,7 +27,7 @@ class Exercise(
         @GeneratedValue(strategy = SEQUENCE)
         val id: Long = 0,
         @DateCreated
-        var created: LocalDateTime? = null,
+        var created: LocalDateTime = LocalDateTime.MIN,
         @DateUpdated
-        var updated: LocalDateTime? = null
+        var updated: LocalDateTime = LocalDateTime.MIN
 )

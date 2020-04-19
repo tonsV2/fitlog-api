@@ -2,7 +2,7 @@ package dk.fitfit.fitlog.controller
 
 import dk.fitfit.fitlog.domain.Role
 import dk.fitfit.fitlog.domain.assembler.toUserResponse
-import dk.fitfit.fitlog.domain.dto.UserResponse
+import dk.fitfit.fitlog.dto.UserResponse
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get

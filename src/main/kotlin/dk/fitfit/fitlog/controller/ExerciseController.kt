@@ -2,8 +2,8 @@ package dk.fitfit.fitlog.controller
 
 import dk.fitfit.fitlog.domain.assembler.toExercise
 import dk.fitfit.fitlog.domain.assembler.toExerciseResponse
-import dk.fitfit.fitlog.domain.dto.ExerciseRequest
-import dk.fitfit.fitlog.domain.dto.ExerciseResponse
+import dk.fitfit.fitlog.dto.ExerciseRequest
+import dk.fitfit.fitlog.dto.ExerciseResponse
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.HttpResponse

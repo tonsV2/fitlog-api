@@ -2,8 +2,8 @@ package dk.fitfit.fitlog.controller
 
 import dk.fitfit.fitlog.domain.assembler.toPicture
 import dk.fitfit.fitlog.domain.assembler.toPictureResponse
-import dk.fitfit.fitlog.domain.dto.PictureRequest
-import dk.fitfit.fitlog.domain.dto.PictureResponse
+import dk.fitfit.fitlog.dto.PictureRequest
+import dk.fitfit.fitlog.dto.PictureResponse
 import dk.fitfit.fitlog.service.PictureService
 import dk.fitfit.fitlog.service.UserService
 import io.micronaut.http.HttpResponse

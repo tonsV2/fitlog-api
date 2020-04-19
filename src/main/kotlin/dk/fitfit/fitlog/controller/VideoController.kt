@@ -2,8 +2,8 @@ package dk.fitfit.fitlog.controller
 
 import dk.fitfit.fitlog.domain.assembler.toVideo
 import dk.fitfit.fitlog.domain.assembler.toVideoResponse
-import dk.fitfit.fitlog.domain.dto.VideoRequest
-import dk.fitfit.fitlog.domain.dto.VideoResponse
+import dk.fitfit.fitlog.dto.VideoRequest
+import dk.fitfit.fitlog.dto.VideoResponse
 import dk.fitfit.fitlog.service.UserService
 import dk.fitfit.fitlog.service.VideoService
 import io.micronaut.http.HttpResponse

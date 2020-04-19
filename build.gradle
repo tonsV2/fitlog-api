@@ -34,6 +34,7 @@ jib {
 repositories {
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
+    maven { url 'https://dl.bintray.com/tons/tons'}
 }
 
 configurations {
@@ -66,6 +67,8 @@ dependencies {
     runtimeOnly "io.micronaut.configuration:micronaut-jdbc-hikari"
 
     compile 'io.github.microutils:kotlin-logging:1.7.7'
+
+    implementation 'dk.fitfit.fitlog:fitlog-dto:0.2.0'
 
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation "io.micronaut.test:micronaut-test-kotlintest"
