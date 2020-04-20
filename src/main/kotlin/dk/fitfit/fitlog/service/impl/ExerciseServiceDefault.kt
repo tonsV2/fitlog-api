@@ -1,6 +1,8 @@
 package dk.fitfit.fitlog.service.impl
 
 import dk.fitfit.fitlog.domain.Exercise
+import dk.fitfit.fitlog.domain.Picture
+import dk.fitfit.fitlog.domain.Video
 import dk.fitfit.fitlog.repository.ExerciseRepository
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.PictureService
@@ -29,7 +31,7 @@ class ExerciseServiceDefault(override val repository: ExerciseRepository,
 //        return repository.save(updated)
     }
 
-    override fun addPicture(exerciseId: Long, pictureId: Long) {
+    override fun addPicture(exerciseId: Long, pictureId: Long): Picture {
         val exercise = get(exerciseId)
         val picture = pictureService.get(pictureId)
         val pictures = exercise.pictures
@@ -39,6 +41,7 @@ class ExerciseServiceDefault(override val repository: ExerciseRepository,
             pictures.add(picture)
         }
         save(exercise)
+        return picture
     }
 
     override fun removePicture(exerciseId: Long, pictureId: Long): Boolean {
@@ -54,7 +57,7 @@ class ExerciseServiceDefault(override val repository: ExerciseRepository,
         return false
     }
 
-    override fun addVideo(exerciseId: Long, videoId: Long) {
+    override fun addVideo(exerciseId: Long, videoId: Long): Video {
         val exercise = get(exerciseId)
         val video = videoService.get(videoId)
         val videos = exercise.videos
@@ -64,6 +67,7 @@ class ExerciseServiceDefault(override val repository: ExerciseRepository,
             videos.add(video)
         }
         save(exercise)
+        return video
     }
 
     override fun removeVideo(exerciseId: Long, videoId: Long): Boolean {
