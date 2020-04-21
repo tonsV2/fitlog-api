@@ -23,7 +23,7 @@ class Workout(
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
         val id: Long = 0,
         @DateCreated
-        var created: LocalDateTime = LocalDateTime.MIN,
+        var created: LocalDateTime? = null,
         @DateUpdated
-        var updated: LocalDateTime = LocalDateTime.MIN
+        var updated: LocalDateTime? = null
 )

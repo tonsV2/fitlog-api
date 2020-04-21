@@ -16,8 +16,8 @@ class User(
                 inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")])
         val roles: MutableList<Role> = mutableListOf(),
         @DateCreated
-        var created: LocalDateTime = LocalDateTime.MIN,
+        var created: LocalDateTime? = null,
         @DateUpdated
-        var updated: LocalDateTime = LocalDateTime.MIN,
+        var updated: LocalDateTime? = null,
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) val id: Long = 0
 )
