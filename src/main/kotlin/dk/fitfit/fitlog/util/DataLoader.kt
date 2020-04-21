@@ -22,11 +22,11 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         val role = roleService.save(Role(Role.ADMIN))
         val roles = roleService.findAll()
 
-        val adminUser = User(authenticationConfiguration.adminUserEmail)
+        val adminUser = User(authenticationConfiguration.adminUserEmail, "")
         adminUser.roles.add(role)
         val savedAdmin = userService.save(adminUser)
 
-        val testUser = User(authenticationConfiguration.testUserEmail)
+        val testUser = User(authenticationConfiguration.testUserEmail, "")
         val savedTest = userService.save(testUser)
 
         val users = userService.findAll()

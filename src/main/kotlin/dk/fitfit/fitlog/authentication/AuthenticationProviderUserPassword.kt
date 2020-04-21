@@ -21,11 +21,13 @@ class AuthenticationProviderUserPassword(private val authenticationConfiguration
         if (authenticationRequest != null) {
             if (authenticationRequest.identity == "_" && authenticationRequest.secret != null) {
                 googleTokenVerifier.verifyToken(authenticationRequest.secret as String)?.let {
+                    val email = it.email
+                    val name = it["name"] as String
                     if (it.email != null && it.emailVerified) {
                         // TODO: If payload.emailVerified == false create AuthenticationFailureReason and pass to AuthenticationFailed
-                        val user = createUserIfNotFound(it.email)
+                        val user = createUserIfNotFound(email, name)
                         val roles = user.roles.map { role -> role.name }
-                        return Flowable.just(UserDetails(it.email, roles))
+                        return Flowable.just(UserDetails(email, roles))
                     }
                 }
             }
@@ -44,10 +46,10 @@ class AuthenticationProviderUserPassword(private val authenticationConfiguration
         return Flowable.just(AuthenticationFailed())
     }
 
-    private fun createUserIfNotFound(email: String): User = try {
+    private fun createUserIfNotFound(email: String, name: String): User = try {
         userService.getByEmail(email)
     } catch (e: UserNotFoundException) {
-        userService.save(User(email))
+        userService.save(User(email, name))
     }
 }
 
