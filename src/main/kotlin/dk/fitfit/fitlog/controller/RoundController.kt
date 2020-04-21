@@ -1,10 +1,10 @@
 package dk.fitfit.fitlog.controller
 
-import dk.fitfit.fitlog.domain.RoundRequest
-import dk.fitfit.fitlog.domain.RoundResponse
 import dk.fitfit.fitlog.domain.User
 import dk.fitfit.fitlog.domain.assembler.toRound
 import dk.fitfit.fitlog.domain.assembler.toRoundResponse
+import dk.fitfit.fitlog.dto.RoundRequest
+import dk.fitfit.fitlog.dto.RoundResponse
 import dk.fitfit.fitlog.service.RoundService
 import dk.fitfit.fitlog.service.UserService
 import dk.fitfit.fitlog.service.WorkoutService

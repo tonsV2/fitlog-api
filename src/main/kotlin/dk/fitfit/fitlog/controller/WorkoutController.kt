@@ -1,9 +1,9 @@
 package dk.fitfit.fitlog.controller
 
-import dk.fitfit.fitlog.domain.WorkoutRequest
-import dk.fitfit.fitlog.domain.WorkoutResponse
 import dk.fitfit.fitlog.domain.assembler.toWorkout
 import dk.fitfit.fitlog.domain.assembler.toWorkoutResponse
+import dk.fitfit.fitlog.dto.WorkoutRequest
+import dk.fitfit.fitlog.dto.WorkoutResponse
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.UserService
 import dk.fitfit.fitlog.service.WorkoutService

@@ -23,20 +23,3 @@ class Round(
         @DateUpdated
         var updated: LocalDateTime = LocalDateTime.MIN
 )
-
-class RoundRequest(
-        val priority: Int,
-        val repetitions: Int,
-        val rest: Int,
-        val id: Long
-)
-
-class RoundResponse(
-        val priority: Int,
-        val repetitions: Int,
-        val rest: Int,
-        val exercises: List<RoundExerciseResponse>?,
-        val id: Long,
-        val created: LocalDateTime,
-        val updated: LocalDateTime
-)
