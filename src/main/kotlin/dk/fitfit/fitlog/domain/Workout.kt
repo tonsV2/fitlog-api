@@ -12,6 +12,7 @@ import javax.persistence.FetchType.EAGER
 @Entity
 class Workout(
         val name: String,
+        @Lob
         val description: String,
         @OneToMany(fetch = EAGER)
         @Fetch(FetchMode.SUBSELECT)

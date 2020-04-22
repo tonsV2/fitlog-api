@@ -13,6 +13,7 @@ import javax.persistence.GenerationType.SEQUENCE
 @Entity
 class Exercise(
         val name: String,
+        @Lob
         val description: String,
         @JsonIgnore
         @ManyToOne
