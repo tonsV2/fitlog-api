@@ -96,5 +96,97 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         workoutService.save(aphroditeRoundId, squatAphroditeExercise)
         val situpsAphroditeExercise = RoundExercise(situps, 50, 0, 3)
         workoutService.save(aphroditeRoundId, situpsAphroditeExercise)
+
+        // Belly flattener
+        val bellyFlattenerWorkout = Workout("Belly Flattener", "bla bla", null, adminUser)
+        val bellyFlattenerWorkoutId = workoutService.save(bellyFlattenerWorkout).id
+
+        val bellyFlattenerRound = Round(0, 5, 0, null)
+        val bellyFlattenerRoundId = workoutService.save(bellyFlattenerWorkoutId, bellyFlattenerRound).id
+
+        val doubleUnder = Exercise("Double Under", "A double under is a popular exercise done on a jump rope in which the rope makes two passes per jump instead of just one. It is significantly more effective than a single rope pass in that it allows for higher work capacity", adminUser)
+        exerciseService.save(doubleUnder)
+        val highKnees = Exercise("High Knees", "High knees...", adminUser)
+        exerciseService.save(highKnees)
+        val plank = Exercise("Plank", "The plank is an isometric core strength exercise that involves maintaining a position similar to a push-up for the maximum possible time", adminUser)
+        exerciseService.save(plank)
+
+        val doubleUnderBellyFlattenerExercise = RoundExercise(doubleUnder, 20, 0, 0)
+        workoutService.save(bellyFlattenerRoundId, doubleUnderBellyFlattenerExercise)
+        val highKneesBellyFlattenerExercise = RoundExercise(highKnees, 20, 0, 1)
+        workoutService.save(bellyFlattenerRoundId, highKneesBellyFlattenerExercise)
+        val situpsBellyFlattenerExercise = RoundExercise(situps, 20, 0, 2)
+        workoutService.save(bellyFlattenerRoundId, situpsBellyFlattenerExercise)
+        val plankBellyFlattenerExercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerRoundId, plankBellyFlattenerExercise)
+
+        // Belly flattener hardcore
+        val bellyFlattenerHardcoreWorkout = Workout("Belly Flattener Hardcore", "bla bla", null, adminUser)
+        val bellyFlattenerHardcoreWorkoutId = workoutService.save(bellyFlattenerHardcoreWorkout).id
+
+        // Round 0
+        val bellyFlattenerHardcoreRound0 = Round(0, 1, 0, null)
+        val bellyFlattenerHardcoreRound0Id = workoutService.save(bellyFlattenerHardcoreWorkoutId, bellyFlattenerHardcoreRound0).id
+
+        val doubleUnderBellyFlattenerRound0Exercise = RoundExercise(doubleUnder, 50, 0, 0)
+        workoutService.save(bellyFlattenerHardcoreRound0Id, doubleUnderBellyFlattenerRound0Exercise)
+        val highKneesBellyFlattenerRound0Exercise = RoundExercise(highKnees, 50, 0, 1)
+        workoutService.save(bellyFlattenerHardcoreRound0Id, highKneesBellyFlattenerRound0Exercise)
+        val situpsBellyFlattenerRound0Exercise = RoundExercise(situps, 50, 0, 2)
+        workoutService.save(bellyFlattenerHardcoreRound0Id, situpsBellyFlattenerRound0Exercise)
+        val plankBellyFlattenerRound0Exercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerHardcoreRound0Id, plankBellyFlattenerRound0Exercise)
+
+        // Round 1
+        val bellyFlattenerHardcoreRound1 = Round(1, 1, 0, null)
+        val bellyFlattenerHardcoreRound1Id = workoutService.save(bellyFlattenerHardcoreWorkoutId, bellyFlattenerHardcoreRound1).id
+
+        val doubleUnderBellyFlattenerRound1Exercise = RoundExercise(doubleUnder, 40, 0, 0)
+        workoutService.save(bellyFlattenerHardcoreRound1Id, doubleUnderBellyFlattenerRound1Exercise)
+        val highKneesBellyFlattenerRound1Exercise = RoundExercise(highKnees, 40, 0, 1)
+        workoutService.save(bellyFlattenerHardcoreRound1Id, highKneesBellyFlattenerRound1Exercise)
+        val situpsBellyFlattenerRound1Exercise = RoundExercise(situps, 40, 0, 2)
+        workoutService.save(bellyFlattenerHardcoreRound1Id, situpsBellyFlattenerRound1Exercise)
+        val plankBellyFlattenerRound1Exercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerHardcoreRound1Id, plankBellyFlattenerRound1Exercise)
+
+        // Round 2
+        val bellyFlattenerHardcoreRound2 = Round(2, 1, 0, null)
+        val bellyFlattenerHardcoreRound2Id = workoutService.save(bellyFlattenerHardcoreWorkoutId, bellyFlattenerHardcoreRound2).id
+
+        val doubleUnderBellyFlattenerRound2Exercise = RoundExercise(doubleUnder, 30, 0, 0)
+        workoutService.save(bellyFlattenerHardcoreRound2Id, doubleUnderBellyFlattenerRound2Exercise)
+        val highKneesBellyFlattenerRound2Exercise = RoundExercise(highKnees, 30, 0, 1)
+        workoutService.save(bellyFlattenerHardcoreRound2Id, highKneesBellyFlattenerRound2Exercise)
+        val situpsBellyFlattenerRound2Exercise = RoundExercise(situps, 30, 0, 2)
+        workoutService.save(bellyFlattenerHardcoreRound2Id, situpsBellyFlattenerRound2Exercise)
+        val plankBellyFlattenerRound2Exercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerHardcoreRound2Id, plankBellyFlattenerRound2Exercise)
+
+        // Round 3
+        val bellyFlattenerHardcoreRound3 = Round(3, 1, 0, null)
+        val bellyFlattenerHardcoreRound3Id = workoutService.save(bellyFlattenerHardcoreWorkoutId, bellyFlattenerHardcoreRound3).id
+
+        val doubleUnderBellyFlattenerRound3Exercise = RoundExercise(doubleUnder, 20, 0, 0)
+        workoutService.save(bellyFlattenerHardcoreRound3Id, doubleUnderBellyFlattenerRound3Exercise)
+        val highKneesBellyFlattenerRound3Exercise = RoundExercise(highKnees, 20, 0, 1)
+        workoutService.save(bellyFlattenerHardcoreRound3Id, highKneesBellyFlattenerRound3Exercise)
+        val situpsBellyFlattenerRound3Exercise = RoundExercise(situps, 20, 0, 2)
+        workoutService.save(bellyFlattenerHardcoreRound3Id, situpsBellyFlattenerRound3Exercise)
+        val plankBellyFlattenerRound3Exercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerHardcoreRound3Id, plankBellyFlattenerRound3Exercise)
+
+        // Round 4
+        val bellyFlattenerHardcoreRound4 = Round(4, 1, 0, null)
+        val bellyFlattenerHardcoreRound4Id = workoutService.save(bellyFlattenerHardcoreWorkoutId, bellyFlattenerHardcoreRound4).id
+
+        val doubleUnderBellyFlattenerRound4Exercise = RoundExercise(doubleUnder, 10, 0, 0)
+        workoutService.save(bellyFlattenerHardcoreRound4Id, doubleUnderBellyFlattenerRound4Exercise)
+        val highKneesBellyFlattenerRound4Exercise = RoundExercise(highKnees, 10, 0, 1)
+        workoutService.save(bellyFlattenerHardcoreRound4Id, highKneesBellyFlattenerRound4Exercise)
+        val situpsBellyFlattenerRound4Exercise = RoundExercise(situps, 10, 0, 2)
+        workoutService.save(bellyFlattenerHardcoreRound4Id, situpsBellyFlattenerRound4Exercise)
+        val plankBellyFlattenerRound4Exercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerHardcoreRound4Id, plankBellyFlattenerRound4Exercise)
     }
 }
