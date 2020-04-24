@@ -54,7 +54,7 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
 
     private fun populate(adminUser: User) {
         // All round
-        val workout = Workout("All round", "bla bla", null, adminUser)
+        val workout = Workout("All round", "Good all round workout", null, adminUser)
         val workoutId = workoutService.save(workout).id
 
         val round = Round(0, 5, 0, null)
@@ -98,7 +98,7 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         workoutService.save(aphroditeRoundId, situpsAphroditeExercise)
 
         // Belly flattener
-        val bellyFlattenerWorkout = Workout("Belly Flattener", "bla bla", null, adminUser)
+        val bellyFlattenerWorkout = Workout("Belly Flattener", "Burn calories and work your abs! While abs are revealed through your diet this exercise strengthen them", null, adminUser)
         val bellyFlattenerWorkoutId = workoutService.save(bellyFlattenerWorkout).id
 
         val bellyFlattenerRound = Round(0, 5, 0, null)
@@ -121,7 +121,7 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         workoutService.save(bellyFlattenerRoundId, plankBellyFlattenerExercise)
 
         // Belly flattener hardcore
-        val bellyFlattenerHardcoreWorkout = Workout("Belly Flattener Hardcore", "bla bla", null, adminUser)
+        val bellyFlattenerHardcoreWorkout = Workout("Belly Flattener Hardcore", "If the normal \"Belly Flattener\" is too easy this edition should give you a sweat... If not, do it twice!", null, adminUser)
         val bellyFlattenerHardcoreWorkoutId = workoutService.save(bellyFlattenerHardcoreWorkout).id
 
         // Round 0
