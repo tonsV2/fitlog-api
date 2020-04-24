@@ -5,17 +5,21 @@ import dk.fitfit.fitlog.domain.assembler.toRoundExerciseResponse
 import dk.fitfit.fitlog.dto.RoundExerciseRequest
 import dk.fitfit.fitlog.dto.RoundExerciseResponse
 import dk.fitfit.fitlog.service.ExerciseService
-import dk.fitfit.fitlog.service.RoundService
+import dk.fitfit.fitlog.service.RoundExerciseService
 import dk.fitfit.fitlog.service.WorkoutService
 import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller
-class RoundExerciseController(private val workoutService: WorkoutService, private val exerciseService: ExerciseService, private val roundService: RoundService) {
+class RoundExerciseController(private val workoutService: WorkoutService, private val exerciseService: ExerciseService, private val roundExerciseService: RoundExerciseService) {
     @Post("/rounds/{roundId}/exercises")
     fun save(roundId: Long, roundExerciseRequest: RoundExerciseRequest, principal: Principal): RoundExerciseResponse {
         // TODO: Ensure that only the workout creator can add exercises
@@ -23,20 +27,21 @@ class RoundExerciseController(private val workoutService: WorkoutService, privat
         val roundExercise = roundExerciseRequest.toRoundExercise(exercise)
         return workoutService.save(roundId, roundExercise).toRoundExerciseResponse()
     }
-/*
+
     @Get("/round-exercises/{id}")
-    fun get(id: Long) = roundService.get(id).toRoundResponse()
+    fun get(id: Long) = roundExerciseService.get(id).toRoundExerciseResponse()
 
     @Get("/round-exercises")
     fun findAll(updatedTimestamp: Long?) = if (updatedTimestamp != null) {
         // TODO: Why do I have to add one millisecond to make this work?
         val epochMilli = Instant.ofEpochMilli(updatedTimestamp + 1)
         val updated = LocalDateTime.ofInstant(epochMilli, ZoneOffset.UTC)
-        roundService.findAllAfter(updated)
+        roundExerciseService.findAllAfter(updated)
     } else {
-        roundService.findAll()
-    }.map { it.toRoundResponse() }
+        roundExerciseService.findAll()
+    }.map { it.toRoundExerciseResponse() }
 
+/*
     @Put("/round-exercises/{id}")
     fun update(id: Long, roundRequest: RoundRequest, principal: Principal): RoundResponse {
         // TODO: Ensure that only the creator of the workout can update it's exercises
