@@ -1,7 +1,9 @@
 package dk.fitfit.fitlog.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import javax.persistence.*
+import dk.fitfit.fitlog.domain.core.BaseEntity
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
 
 @Entity
 class Video(
@@ -9,7 +11,5 @@ class Video(
         @JsonIgnore
         @ManyToOne
         val creator: User,
-        @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val id: Long = 0
-)
+        id: Long = 0
+) : BaseEntity(id)

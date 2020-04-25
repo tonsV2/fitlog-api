@@ -1,13 +1,14 @@
 package dk.fitfit.fitlog.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import io.micronaut.data.annotation.DateCreated
-import io.micronaut.data.annotation.DateUpdated
+import dk.fitfit.fitlog.domain.core.BaseEntity
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
-import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Entity
 import javax.persistence.FetchType.EAGER
+import javax.persistence.Lob
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 
 @Entity
 class Workout(
@@ -20,11 +21,5 @@ class Workout(
         @JsonIgnore
         @ManyToOne
         val creator: User,
-        @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val id: Long = 0,
-        @DateCreated
-        var created: LocalDateTime? = null,
-        @DateUpdated
-        var updated: LocalDateTime? = null
-)
+        id: Long = 0
+) : BaseEntity(id)

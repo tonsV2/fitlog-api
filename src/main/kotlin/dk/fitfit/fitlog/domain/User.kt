@@ -1,8 +1,6 @@
 package dk.fitfit.fitlog.domain
 
-import io.micronaut.data.annotation.DateCreated
-import io.micronaut.data.annotation.DateUpdated
-import java.time.LocalDateTime
+import dk.fitfit.fitlog.domain.core.BaseEntity
 import javax.persistence.*
 
 @Entity
@@ -15,9 +13,5 @@ class User(
                 joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")])
         val roles: MutableList<Role> = mutableListOf(),
-        @DateCreated
-        var created: LocalDateTime? = null,
-        @DateUpdated
-        var updated: LocalDateTime? = null,
-        @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) val id: Long = 0
-)
+        id: Long = 0
+) : BaseEntity(id)

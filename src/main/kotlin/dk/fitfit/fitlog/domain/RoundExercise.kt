@@ -1,9 +1,8 @@
 package dk.fitfit.fitlog.domain
 
-import io.micronaut.data.annotation.DateCreated
-import io.micronaut.data.annotation.DateUpdated
-import java.time.LocalDateTime
-import javax.persistence.*
+import dk.fitfit.fitlog.domain.core.BaseEntity
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
 
 @Entity
 class RoundExercise(
@@ -12,11 +11,5 @@ class RoundExercise(
         val repetitions: Int,
         val maxTime: Int,
         val priority: Int,
-        @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val id: Long = 0,
-        @DateCreated
-        var created: LocalDateTime? = null,
-        @DateUpdated
-        var updated: LocalDateTime? = null
-)
+        id: Long = 0
+) : BaseEntity(id)
