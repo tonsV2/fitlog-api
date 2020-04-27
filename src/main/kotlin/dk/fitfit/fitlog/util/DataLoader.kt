@@ -54,7 +54,7 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
 
     private fun populate(adminUser: User) {
         // All round
-        val workout = Workout("All round", "Good all round workout", null, adminUser)
+        val workout = Workout("Signe", "Good all round workout", null, adminUser)
         val workoutId = workoutService.save(workout).id
 
         val round = Round(0, 5, 0, null)
@@ -79,11 +79,11 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         workoutService.save(roundId, burpeesExercise)
 
         // Full body blaster
-        val aphroditeWorkout = Workout("Full body blaster", "bla bla", null, adminUser)
-        val aphroditeWorkoutId = workoutService.save(aphroditeWorkout).id
+        val fullBodyBlasterWorkout = Workout("Roskva", "bla bla", null, adminUser)
+        val fullBodyBlasterWorkoutId = workoutService.save(fullBodyBlasterWorkout).id
 
-        val aphroditeRound = Round(0, 5, 0, null)
-        val aphroditeRoundId = workoutService.save(aphroditeWorkoutId, aphroditeRound).id
+        val fullBodyBlasterRound = Round(0, 5, 0, null)
+        val fullBodyBlasterRoundId = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound).id
 
         val squat = Exercise("Squat", "A squat is a strength exercise in which the trainee lowers their hips from a standing position and then stands back up. During the descent of a squat, the hip and knee joints flex while the ankle joint dorsiflexes; conversely the hip and knee joints extend and the ankle joint plantarflexes when standing up", adminUser)
         exerciseService.save(squat)
@@ -91,11 +91,11 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         exerciseService.save(situps)
 
         val burpeesAphroditeExercise = RoundExercise(burpees, 50, 0, 0)
-        workoutService.save(aphroditeRoundId, burpeesAphroditeExercise)
+        workoutService.save(fullBodyBlasterRoundId, burpeesAphroditeExercise)
         val squatAphroditeExercise = RoundExercise(squat, 50, 0, 1)
-        workoutService.save(aphroditeRoundId, squatAphroditeExercise)
+        workoutService.save(fullBodyBlasterRoundId, squatAphroditeExercise)
         val situpsAphroditeExercise = RoundExercise(situps, 50, 0, 3)
-        workoutService.save(aphroditeRoundId, situpsAphroditeExercise)
+        workoutService.save(fullBodyBlasterRoundId, situpsAphroditeExercise)
 
         // Belly flattener
         val bellyFlattenerWorkout = Workout("Belly Flattener", "Burn calories and work your abs! While abs are revealed through your diet this exercise strengthen them", null, adminUser)
