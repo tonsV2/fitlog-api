@@ -1,11 +1,12 @@
 package dk.fitfit.fitlog.repository
 
 import dk.fitfit.fitlog.domain.Round
+import dk.fitfit.fitlog.repository.core.UpdatedAfterRepository
 import io.micronaut.data.annotation.Repository
 import io.micronaut.data.repository.CrudRepository
 import java.time.LocalDateTime
+import javax.inject.Named
 
 @Repository
-interface RoundRepository : CrudRepository<Round, Long> {
-    fun findByUpdatedAfter(updatedDateTime: LocalDateTime): Iterable<Round>
-}
+@Named("RoundRepository")
+interface RoundRepository : CrudRepository<Round, Long>, UpdatedAfterRepository<Round, LocalDateTime>

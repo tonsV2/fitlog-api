@@ -4,23 +4,28 @@ import dk.fitfit.fitlog.domain.Exercise
 import dk.fitfit.fitlog.domain.Picture
 import dk.fitfit.fitlog.domain.Video
 import dk.fitfit.fitlog.repository.ExerciseRepository
+import dk.fitfit.fitlog.repository.core.UpdatedAfterRepository
 import dk.fitfit.fitlog.service.ExerciseService
 import dk.fitfit.fitlog.service.PictureService
 import dk.fitfit.fitlog.service.VideoService
 import dk.fitfit.fitlog.util.merge
 import java.time.LocalDateTime
+import javax.inject.Named
 import javax.inject.Singleton
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Singleton
 @Transactional
-class ExerciseServiceDefault(override val repository: ExerciseRepository,
-                             private val videoService: VideoService,
-                             private val pictureService: PictureService,
-                             private val entityManager: EntityManager) : ExerciseService {
-
-    override fun findAllAfter(updatedDateTime: LocalDateTime): Iterable<Exercise> = repository.findByUpdatedAfter(updatedDateTime)
+class ExerciseServiceDefault(
+        @Named("ExerciseRepository") override val updatedAfterRepository: UpdatedAfterRepository<Exercise, LocalDateTime>,
+//        override val updatedAfterRepository: UpdatedAfterRepository<Exercise, LocalDateTime>,
+//        override val updatedAfterRepository: ExerciseRepository,
+        override val crudRepository: ExerciseRepository,
+        private val videoService: VideoService,
+        private val pictureService: PictureService,
+        private val entityManager: EntityManager
+) : ExerciseService {
 
 // TODO: Should be moved to CrudService
 // TODO: Should not use entityManager

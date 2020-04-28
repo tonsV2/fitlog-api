@@ -5,18 +5,27 @@ import dk.fitfit.fitlog.domain.RoundExercise
 import dk.fitfit.fitlog.domain.Workout
 import dk.fitfit.fitlog.repository.RoundExerciseRepository
 import dk.fitfit.fitlog.repository.WorkoutRepository
+import dk.fitfit.fitlog.repository.core.UpdatedAfterRepository
 import dk.fitfit.fitlog.service.RoundService
 import dk.fitfit.fitlog.service.WorkoutService
 import dk.fitfit.fitlog.util.merge
 import java.time.LocalDateTime
+import javax.inject.Named
 import javax.inject.Singleton
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Singleton
 @Transactional
-class WorkoutServiceDefault(override val repository: WorkoutRepository, private val entityManager: EntityManager, private val roundService: RoundService, private val roundExerciseRepository: RoundExerciseRepository) : WorkoutService {
-    // TODO: Should be moved to CrudService
+class WorkoutServiceDefault(
+        override val crudRepository: WorkoutRepository,
+//        override val updatedAfterRepository: WorkoutRepository,
+        @Named("WorkoutRepository") override val updatedAfterRepository: UpdatedAfterRepository<Workout, LocalDateTime>,
+        private val entityManager: EntityManager,
+        private val roundService: RoundService,
+        private val roundExerciseRepository: RoundExerciseRepository
+) : WorkoutService {
+// TODO: Should be moved to CrudService
 // TODO: Should not use entityManager
     override fun update(id: Long, workout: Workout): Workout {
         val existing = get(id)
@@ -24,8 +33,6 @@ class WorkoutServiceDefault(override val repository: WorkoutRepository, private 
         return entityManager.merge(updated)
 //        return repository.save(updated)
     }
-
-    override fun findAllAfter(updatedDateTime: LocalDateTime): Iterable<Workout> = repository.findByUpdatedAfter(updatedDateTime)
 
     override fun save(roundId: Long, roundExercise: RoundExercise): RoundExercise {
         val round = roundService.get(roundId)

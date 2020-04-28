@@ -5,4 +5,4 @@ import dk.fitfit.fitlog.service.VideoService
 import javax.inject.Singleton
 
 @Singleton
-class VideoServiceDefault(override val repository: VideoRepository) : VideoService
+class VideoServiceDefault(override val crudRepository: VideoRepository) : VideoService

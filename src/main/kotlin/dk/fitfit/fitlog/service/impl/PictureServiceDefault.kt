@@ -5,4 +5,4 @@ import dk.fitfit.fitlog.service.PictureService
 import javax.inject.Singleton
 
 @Singleton
-class PictureServiceDefault(override val repository: PictureRepository) : PictureService
+class PictureServiceDefault(override val crudRepository: PictureRepository) : PictureService
