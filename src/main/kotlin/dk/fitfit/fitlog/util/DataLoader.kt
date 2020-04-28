@@ -53,13 +53,7 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
     }
 
     private fun populate(adminUser: User) {
-        // All round
-        val workout = Workout("Signe", "Good all round workout", null, adminUser)
-        val workoutId = workoutService.save(workout).id
-
-        val round = Round(0, 5, 0, null)
-        val roundId = workoutService.save(workoutId, round).id
-
+        // Exercises
         val jumpingJacks = Exercise("Jumping Jacks", "A jumping jack or star jump, also called side-straddle hop in the US military, is a physical jumping exercise performed by jumping to a position with the legs spread wide and the hands going overhead, sometimes in a clap, and then returning to a position with the feet together and the arms at the sides", adminUser)
         exerciseService.save(jumpingJacks)
         val crunches = Exercise("Crunches", "The crunch is one of the most popular abdominal exercises. It involves the entire abs, but primarily it works the rectus abdominis muscle and also works the obliques. It allows both building six-pack abs, and tightening the belly", adminUser)
@@ -68,42 +62,10 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         exerciseService.save(lunges)
         val burpees = Exercise("Burpees", "The burpee, or squat thrust, is a full body exercise used in strength training and as an aerobic exercise. The basic movement is performed in four steps and known as a \"four-count burpee\": Begin in a standing position. Move into a squat position with your hands on the ground", adminUser)
         exerciseService.save(burpees)
-
-        val jumpingJacksExercise = RoundExercise(jumpingJacks, 50, 0, 0)
-        workoutService.save(roundId, jumpingJacksExercise)
-        val lungesExercise = RoundExercise(lunges, 20, 0, 1)
-        workoutService.save(roundId, lungesExercise)
-        val crunchesExercise = RoundExercise(crunches, 20, 0, 2)
-        workoutService.save(roundId, crunchesExercise)
-        val burpeesExercise = RoundExercise(burpees, 20, 0, 3)
-        workoutService.save(roundId, burpeesExercise)
-
-        // Full body blaster
-        val fullBodyBlasterWorkout = Workout("Roskva", "bla bla", null, adminUser)
-        val fullBodyBlasterWorkoutId = workoutService.save(fullBodyBlasterWorkout).id
-
-        val fullBodyBlasterRound = Round(0, 5, 0, null)
-        val fullBodyBlasterRoundId = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound).id
-
         val squat = Exercise("Squat", "A squat is a strength exercise in which the trainee lowers their hips from a standing position and then stands back up. During the descent of a squat, the hip and knee joints flex while the ankle joint dorsiflexes; conversely the hip and knee joints extend and the ankle joint plantarflexes when standing up", adminUser)
         exerciseService.save(squat)
         val situps = Exercise("Sit-up", "The sit-up is an abdominal endurance training exercise to strengthen, tighten and tone the abdominal muscles. It is similar to a crunch, but sit-ups have a fuller range of motion and condition additional muscles", adminUser)
         exerciseService.save(situps)
-
-        val burpeesFullBodyBlasterExercise = RoundExercise(burpees, 50, 0, 0)
-        workoutService.save(fullBodyBlasterRoundId, burpeesFullBodyBlasterExercise)
-        val squatFullBodyBlasterExercise = RoundExercise(squat, 50, 0, 1)
-        workoutService.save(fullBodyBlasterRoundId, squatFullBodyBlasterExercise)
-        val situpsFullBodyBlasterExercise = RoundExercise(situps, 50, 0, 3)
-        workoutService.save(fullBodyBlasterRoundId, situpsFullBodyBlasterExercise)
-
-        // Belly flattener
-        val bellyFlattenerWorkout = Workout("Belly Flattener", "Burn calories and work your abs! While abs are revealed through your diet this exercise strengthen them", null, adminUser)
-        val bellyFlattenerWorkoutId = workoutService.save(bellyFlattenerWorkout).id
-
-        val bellyFlattenerRound = Round(0, 5, 0, null)
-        val bellyFlattenerRoundId = workoutService.save(bellyFlattenerWorkoutId, bellyFlattenerRound).id
-
         val doubleUnder = Exercise("Double Under", "A double under is a popular exercise done on a jump rope in which the rope makes two passes per jump instead of just one. It is significantly more effective than a single rope pass in that it allows for higher work capacity", adminUser)
         exerciseService.save(doubleUnder)
         val highKnees = Exercise("High Knees", "High knees...", adminUser)
@@ -111,16 +73,14 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         val plank = Exercise("Plank", "The plank is an isometric core strength exercise that involves maintaining a position similar to a push-up for the maximum possible time", adminUser)
         exerciseService.save(plank)
 
-        val doubleUnderBellyFlattenerExercise = RoundExercise(doubleUnder, 20, 0, 0)
-        workoutService.save(bellyFlattenerRoundId, doubleUnderBellyFlattenerExercise)
-        val highKneesBellyFlattenerExercise = RoundExercise(highKnees, 20, 0, 1)
-        workoutService.save(bellyFlattenerRoundId, highKneesBellyFlattenerExercise)
-        val situpsBellyFlattenerExercise = RoundExercise(situps, 20, 0, 2)
-        workoutService.save(bellyFlattenerRoundId, situpsBellyFlattenerExercise)
-        val plankBellyFlattenerExercise = RoundExercise(plank, 1, 120, 3)
-        workoutService.save(bellyFlattenerRoundId, plankBellyFlattenerExercise)
+        // Workouts
+        signe(adminUser, jumpingJacks, lunges, crunches, burpees)
+        roskva(adminUser, burpees, squat, situps)
+        bellyFlattener(adminUser, doubleUnder, highKnees, situps, plank)
+        bellyFlattenerHardcore(adminUser, doubleUnder, highKnees, situps, plank)
+    }
 
-        // Belly flattener hardcore
+    private fun bellyFlattenerHardcore(adminUser: User, doubleUnder: Exercise, highKnees: Exercise, situps: Exercise, plank: Exercise) {
         val bellyFlattenerHardcoreWorkout = Workout("Belly Flattener Hardcore", "If the normal \"Belly Flattener\" is too easy this edition should give you a sweat... If not, do it twice!", null, adminUser)
         val bellyFlattenerHardcoreWorkoutId = workoutService.save(bellyFlattenerHardcoreWorkout).id
 
@@ -188,5 +148,99 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         workoutService.save(bellyFlattenerHardcoreRound4Id, situpsBellyFlattenerRound4Exercise)
         val plankBellyFlattenerRound4Exercise = RoundExercise(plank, 1, 120, 3)
         workoutService.save(bellyFlattenerHardcoreRound4Id, plankBellyFlattenerRound4Exercise)
+    }
+
+    private fun bellyFlattener(adminUser: User, doubleUnder: Exercise, highKnees: Exercise, situps: Exercise, plank: Exercise) {
+        val bellyFlattenerWorkout = Workout("Belly Flattener", "Burn calories and work your abs! While abs are revealed through your diet this exercise strengthen them", null, adminUser)
+        val bellyFlattenerWorkoutId = workoutService.save(bellyFlattenerWorkout).id
+
+        val bellyFlattenerRound = Round(0, 5, 0, null)
+        val bellyFlattenerRoundId = workoutService.save(bellyFlattenerWorkoutId, bellyFlattenerRound).id
+
+        val doubleUnderBellyFlattenerExercise = RoundExercise(doubleUnder, 20, 0, 0)
+        workoutService.save(bellyFlattenerRoundId, doubleUnderBellyFlattenerExercise)
+        val highKneesBellyFlattenerExercise = RoundExercise(highKnees, 20, 0, 1)
+        workoutService.save(bellyFlattenerRoundId, highKneesBellyFlattenerExercise)
+        val situpsBellyFlattenerExercise = RoundExercise(situps, 20, 0, 2)
+        workoutService.save(bellyFlattenerRoundId, situpsBellyFlattenerExercise)
+        val plankBellyFlattenerExercise = RoundExercise(plank, 1, 120, 3)
+        workoutService.save(bellyFlattenerRoundId, plankBellyFlattenerExercise)
+    }
+
+    private fun signe(adminUser: User, jumpingJacks: Exercise, lunges: Exercise, crunches: Exercise, burpees: Exercise) {
+        val workout = Workout("Signe", "Good all round workout", null, adminUser)
+        val workoutId = workoutService.save(workout).id
+
+        val round = Round(0, 5, 0, null)
+        val roundId = workoutService.save(workoutId, round).id
+
+        val jumpingJacksExercise = RoundExercise(jumpingJacks, 50, 0, 0)
+        workoutService.save(roundId, jumpingJacksExercise)
+        val lungesExercise = RoundExercise(lunges, 20, 0, 1)
+        workoutService.save(roundId, lungesExercise)
+        val crunchesExercise = RoundExercise(crunches, 20, 0, 2)
+        workoutService.save(roundId, crunchesExercise)
+        val burpeesExercise = RoundExercise(burpees, 20, 0, 3)
+        workoutService.save(roundId, burpeesExercise)
+    }
+
+    private fun roskva(adminUser: User, burpees: Exercise, squat: Exercise, situps: Exercise) {
+        val fullBodyBlasterWorkout = Workout("Roskva", "bla bla", null, adminUser)
+        val fullBodyBlasterWorkoutId = workoutService.save(fullBodyBlasterWorkout).id
+
+        // Round 0
+        val fullBodyBlasterRound0 = Round(0, 5, 0, null)
+        val fullBodyBlasterRound0Id = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound0).id
+
+        val burpeesFullBodyBlasterExercise0 = RoundExercise(burpees, 50, 0, 0)
+        workoutService.save(fullBodyBlasterRound0Id, burpeesFullBodyBlasterExercise0)
+        val squatFullBodyBlasterExercise0 = RoundExercise(squat, 50, 0, 1)
+        workoutService.save(fullBodyBlasterRound0Id, squatFullBodyBlasterExercise0)
+        val situpsFullBodyBlasterExercise0 = RoundExercise(situps, 50, 0, 3)
+        workoutService.save(fullBodyBlasterRound0Id, situpsFullBodyBlasterExercise0)
+
+        // Round 1
+        val fullBodyBlasterRound1 = Round(0, 5, 0, null)
+        val fullBodyBlasterRound1Id = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound1).id
+
+        val burpeesFullBodyBlasterExercise1 = RoundExercise(burpees, 40, 0, 0)
+        workoutService.save(fullBodyBlasterRound1Id, burpeesFullBodyBlasterExercise1)
+        val squatFullBodyBlasterExercise1 = RoundExercise(squat, 40, 0, 1)
+        workoutService.save(fullBodyBlasterRound1Id, squatFullBodyBlasterExercise1)
+        val situpsFullBodyBlasterExercise1 = RoundExercise(situps, 40, 0, 3)
+        workoutService.save(fullBodyBlasterRound1Id, situpsFullBodyBlasterExercise1)
+
+        // Round 2
+        val fullBodyBlasterRound2 = Round(0, 5, 0, null)
+        val fullBodyBlasterRound2Id = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound2).id
+
+        val burpeesFullBodyBlasterExercise2 = RoundExercise(burpees, 30, 0, 0)
+        workoutService.save(fullBodyBlasterRound2Id, burpeesFullBodyBlasterExercise2)
+        val squatFullBodyBlasterExercise2 = RoundExercise(squat, 30, 0, 1)
+        workoutService.save(fullBodyBlasterRound2Id, squatFullBodyBlasterExercise2)
+        val situpsFullBodyBlasterExercise2 = RoundExercise(situps, 30, 0, 3)
+        workoutService.save(fullBodyBlasterRound2Id, situpsFullBodyBlasterExercise2)
+
+        // Round 3
+        val fullBodyBlasterRound3 = Round(0, 5, 0, null)
+        val fullBodyBlasterRound3Id = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound3).id
+
+        val burpeesFullBodyBlasterExercise3 = RoundExercise(burpees, 20, 0, 0)
+        workoutService.save(fullBodyBlasterRound3Id, burpeesFullBodyBlasterExercise3)
+        val squatFullBodyBlasterExercise3 = RoundExercise(squat, 20, 0, 1)
+        workoutService.save(fullBodyBlasterRound3Id, squatFullBodyBlasterExercise3)
+        val situpsFullBodyBlasterExercise3 = RoundExercise(situps, 20, 0, 3)
+        workoutService.save(fullBodyBlasterRound3Id, situpsFullBodyBlasterExercise3)
+
+        // Round 4
+        val fullBodyBlasterRound4 = Round(0, 5, 0, null)
+        val fullBodyBlasterRound4Id = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound4).id
+
+        val burpeesFullBodyBlasterExercise4 = RoundExercise(burpees, 10, 0, 0)
+        workoutService.save(fullBodyBlasterRound4Id, burpeesFullBodyBlasterExercise4)
+        val squatFullBodyBlasterExercise4 = RoundExercise(squat, 10, 0, 1)
+        workoutService.save(fullBodyBlasterRound4Id, squatFullBodyBlasterExercise4)
+        val situpsFullBodyBlasterExercise4 = RoundExercise(situps, 10, 0, 3)
+        workoutService.save(fullBodyBlasterRound4Id, situpsFullBodyBlasterExercise4)
     }
 }
