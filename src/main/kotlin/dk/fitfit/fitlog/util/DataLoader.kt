@@ -90,12 +90,12 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         val situps = Exercise("Sit-up", "The sit-up is an abdominal endurance training exercise to strengthen, tighten and tone the abdominal muscles. It is similar to a crunch, but sit-ups have a fuller range of motion and condition additional muscles", adminUser)
         exerciseService.save(situps)
 
-        val burpeesAphroditeExercise = RoundExercise(burpees, 50, 0, 0)
-        workoutService.save(fullBodyBlasterRoundId, burpeesAphroditeExercise)
-        val squatAphroditeExercise = RoundExercise(squat, 50, 0, 1)
-        workoutService.save(fullBodyBlasterRoundId, squatAphroditeExercise)
-        val situpsAphroditeExercise = RoundExercise(situps, 50, 0, 3)
-        workoutService.save(fullBodyBlasterRoundId, situpsAphroditeExercise)
+        val burpeesFullBodyBlasterExercise = RoundExercise(burpees, 50, 0, 0)
+        workoutService.save(fullBodyBlasterRoundId, burpeesFullBodyBlasterExercise)
+        val squatFullBodyBlasterExercise = RoundExercise(squat, 50, 0, 1)
+        workoutService.save(fullBodyBlasterRoundId, squatFullBodyBlasterExercise)
+        val situpsFullBodyBlasterExercise = RoundExercise(situps, 50, 0, 3)
+        workoutService.save(fullBodyBlasterRoundId, situpsFullBodyBlasterExercise)
 
         // Belly flattener
         val bellyFlattenerWorkout = Workout("Belly Flattener", "Burn calories and work your abs! While abs are revealed through your diet this exercise strengthen them", null, adminUser)
