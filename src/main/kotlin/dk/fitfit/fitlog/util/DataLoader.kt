@@ -72,14 +72,39 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         exerciseService.save(highKnees)
         val plank = Exercise("Plank", "The plank is an isometric core strength exercise that involves maintaining a position similar to a push-up for the maximum possible time", adminUser)
         exerciseService.save(plank)
+        val hangingLegRaises = Exercise("Hanging Leg Raises", "Raise your legs while hanging....", adminUser)
+        exerciseService.save(hangingLegRaises)
+        val pushUps = Exercise("Push ups", "Push up....", adminUser)
+        exerciseService.save(pushUps)
 
         // Workouts
+        // TODO: Add USMC and other workouts
+        // Introduce some of these as challanges
+        // https://officercandidatesschool.com/2014/08/11/challenge-marsoc-short-long-cards/
         signe(adminUser, jumpingJacks, lunges, crunches, burpees)
         roskva(adminUser, burpees, squat, situps)
         roskvaHardcore(adminUser, burpees, squat, situps)
         bellyFlattener(adminUser, doubleUnder, highKnees, situps, plank)
         bellyFlattenerHardcore(adminUser, doubleUnder, highKnees, situps, plank)
         randi(adminUser, burpees, squat, situps)
+        anna(adminUser, pushUps, hangingLegRaises, squat)
+    }
+
+    private fun anna(adminUser: User, pushUps: Exercise, hangingLegRaises: Exercise, squat: Exercise) {
+        val annaWorkout = Workout("Anna", "Chest, stomach and legs...", null, adminUser)
+        val annaWorkoutId = workoutService.save(annaWorkout).id
+
+        val annaRound = Round(0, 5, 0, null)
+        val annaRoundId = workoutService.save(annaWorkoutId, annaRound).id
+
+        val pushUpsRoundExercise = RoundExercise(pushUps, 10, 0, 0)
+        workoutService.save(annaRoundId, pushUpsRoundExercise)
+
+        val hangingLegRaisesRoundExercise = RoundExercise(hangingLegRaises, 10, 0, 0)
+        workoutService.save(annaRoundId, hangingLegRaisesRoundExercise)
+
+        val squatRoundExercise = RoundExercise(squat, 20, 0, 0)
+        workoutService.save(annaRoundId, squatRoundExercise)
     }
 
     private fun bellyFlattenerHardcore(adminUser: User, doubleUnder: Exercise, highKnees: Exercise, situps: Exercise, plank: Exercise) {
@@ -190,7 +215,6 @@ open class DataLoader(private val authenticationConfiguration: AuthenticationCon
         val fullBodyBlasterWorkout = Workout("Roskva", "bla bla", null, adminUser)
         val fullBodyBlasterWorkoutId = workoutService.save(fullBodyBlasterWorkout).id
 
-        // Round 0
         val fullBodyBlasterRound0 = Round(0, 5, 0, null)
         val fullBodyBlasterRound0Id = workoutService.save(fullBodyBlasterWorkoutId, fullBodyBlasterRound0).id
 
